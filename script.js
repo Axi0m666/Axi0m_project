@@ -1,10 +1,12 @@
 'use strict';
 
+// Инициализация после загрузки DOM
 document.addEventListener('DOMContentLoaded', () => {
-    // F5 Refresh handler
+    // Сброс позиции скролла при перезагрузке (F5)
     history.scrollRestoration = 'manual';
     window.scrollTo({ top: 0, behavior: 'instant' });
     
+    // Обработка F5 и Ctrl+R
     document.addEventListener('keydown', (e) => {
         if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
             e.preventDefault();
@@ -13,9 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Utilities
+    // Утилиты
     const $ = (sel, el = document) => el.querySelector(sel);
     const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+    
+    // Throttle для оптимизации частых событий
     const throttle = (fn, wait) => {
         let time = Date.now();
         return (...args) => {
@@ -26,7 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    // Canvas Particles (performance optimized)
+    /* ============================================
+       CANVAS АНИМАЦИЯ ЧАСТИЦ
+       ============================================ */
     const initCanvas = () => {
         const canvas = $('#network-canvas');
         if (!canvas || !matchMedia('(pointer: fine)').matches) {
@@ -37,16 +43,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = canvas.getContext('2d', { alpha: false });
         const particles = [];
         let animationId, lastTime = 0;
+        
+        // Настройки производительности
         const isMobile = innerWidth < 768;
         const CONFIG = { count: isMobile ? 30 : 60, connect: 120, mouse: 150 };
         const mouse = { x: null, y: null, last: 0 };
 
+        // Изменение размера canvas
         const resize = () => {
             canvas.width = innerWidth;
             canvas.height = innerHeight;
         };
 
         addEventListener('resize', throttle(resize, 200));
+        
+        // Отслеживание мыши с throttle
         addEventListener('mousemove', throttle((e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
@@ -56,8 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
         addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
         resize();
 
+        // Класс частицы
         class Particle {
             constructor() { this.reset(); }
+            
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
@@ -65,12 +78,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.vy = (Math.random() - 0.5) * 0.5;
                 this.r = Math.random() * 2 + 1;
             }
+            
             update() {
+                // Движение
                 this.x += this.vx;
                 this.y += this.vy;
+                
+                // Отскок от границ
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
                 
+                // Отталкивание от мыши
                 const now = Date.now();
                 if (mouse.x !== null && now - mouse.last < 100) {
                     const dx = mouse.x - this.x;
@@ -83,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
+            
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
@@ -91,18 +110,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Создание частиц
         for (let i = 0; i < CONFIG.count; i++) particles.push(new Particle());
         
+        // Анимационный цикл с ограничением FPS (30fps)
         const animate = (time) => {
             animationId = requestAnimationFrame(animate);
-            if (time - lastTime < 33) return; // 30fps cap
+            if (time - lastTime < 33) return;
             lastTime = time;
             
+            // Очистка
             ctx.fillStyle = '#0a0a0f';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
+            // Обновление и отрисовка частиц
             particles.forEach(p => { p.update(); p.draw(); });
             
+            // Рисование связей между близкими частицами
             ctx.lineWidth = 1;
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
@@ -121,13 +145,17 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         animate(0);
+        
+        // Пауза при скрытии вкладки (экономия ресурсов)
         document.addEventListener('visibilitychange', () => {
             cancelAnimationFrame(animationId);
             if (!document.hidden) animate(0);
         });
     };
 
-    // Copy link
+    /* ============================================
+       КОПИРОВАНИЕ ССЫЛКИ В БУФЕР
+       ============================================ */
     $('#copyBtn')?.addEventListener('click', async () => {
         const toast = $('#toast');
         const text = $('#copy-text');
@@ -139,10 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 toast?.classList.remove('show');
                 if (text) text.textContent = "Копировать ссылку";
             }, 2000);
-        } catch (err) { console.error(err); }
+        } catch (err) { console.error('Copy failed:', err); }
     });
 
-    // Mobile menu
+    /* ============================================
+       МОБИЛЬНОЕ МЕНЮ
+       ============================================ */
     const initMenu = () => {
         const btn = $('#mobileMenuBtn');
         const nav = $('#navLinks');
@@ -155,15 +185,21 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+        
+        // Закрытие при клике вне меню
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.navbar') && nav.classList.contains('active')) toggle();
         });
+        
+        // Закрытие при клике на ссылку
         $$('.nav-link', nav).forEach(a => a.addEventListener('click', () => {
             if (nav.classList.contains('active')) toggle();
         }));
     };
 
-    // Smooth scroll
+    /* ============================================
+       ПЛАВНЫЙ СКРОЛЛ К ЯКОРЯМ
+       ============================================ */
     $$('a[href^="#"]').forEach(a => {
         a.addEventListener('click', (e) => {
             e.preventDefault();
@@ -171,7 +207,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Reveal animation (optimized single observer)
+    /* ============================================
+       АНИМАЦИИ ПРИ СКРОЛЛЕ (REVEAL)
+       ============================================ */
     const initReveal = () => {
         const obs = new IntersectionObserver((entries) => {
             entries.forEach(e => {
@@ -185,7 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
         $$('.glass-card, .role-item').forEach(el => obs.observe(el));
     };
 
-    // Rules Slider (optimized)
+    /* ============================================
+       СЛАЙДЕР ПРАВИЛ
+       ============================================ */
     const initSlider = () => {
         const slider = $('#rulesSlider');
         if (!slider) return;
@@ -198,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const total = slides.length;
         let current = 0;
 
-        // Create dots
+        // Создание точек навигации
         slides.forEach((_, i) => {
             const dot = document.createElement('button');
             dot.className = `dot${i >= 6 ? ' strict-dot' : ''}${i === 0 ? ' active' : ''}`;
@@ -209,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const dots = $$('.dot', slider);
 
+        // Переход к слайду
         const goTo = (idx) => {
             idx = (idx + total) % total;
             if (idx === current) return;
@@ -220,16 +261,18 @@ document.addEventListener('DOMContentLoaded', () => {
             
             slides[current].classList.add('active');
             dots[current].classList.add('active');
+            
             if (counter) {
                 counter.textContent = String(current + 1).padStart(2, '0');
                 counter.classList.toggle('strict-count', current >= 6);
             }
         };
 
+        // Кнопки вперед/назад
         nextBtn?.addEventListener('click', () => goTo(current + 1));
         prevBtn?.addEventListener('click', () => goTo(current - 1));
 
-        // Touch swipe
+        // Свайп на мобильных
         let startX = 0;
         slider.addEventListener('touchstart', e => startX = e.changedTouches[0].screenX, { passive: true });
         slider.addEventListener('touchend', e => {
@@ -237,14 +280,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
         }, { passive: true });
 
-        // Keyboard navigation
+        // Управление с клавиатуры
         slider.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') goTo(current - 1);
             if (e.key === 'ArrowRight') goTo(current + 1);
         });
     };
 
-    // Initialize all
+    /* ============================================
+       ЗАПУСК ВСЕХ МОДУЛЕЙ
+       ============================================ */
     initCanvas();
     initMenu();
     initReveal();
