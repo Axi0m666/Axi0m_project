@@ -1,52 +1,51 @@
 /* ============================================
-   VARIABLES & BASE
+   БАЗОВЫЕ НАСТРОЙКИ И ПЕРЕМЕННЫЕ
    ============================================ */
 :root {
-    --accent-color: #276CF5;
+    /* Основная палитра */
+    --accent: #276CF5;
     --accent-dark: #1a5fd9;
-    --accent-glow: rgba(39, 108, 245, 0.3);
     --accent-light: #4a8cff;
-    --strict-color: #dc3545;
+    --accent-glow: rgba(39, 108, 245, 0.3);
+    
+    /* Цвета ролей */
+    --cyan: #00d4ff;
+    --cyan-glow: rgba(0, 212, 255, 0.3);
+    --strict: #dc3545;
     --strict-glow: rgba(220, 53, 69, 0.3);
-    --cyan-color: #00d4ff;
-    --bg-primary: #0a0a0f;
-    --bg-secondary: #111118;
+    
+    /* Фон и текст */
+    --bg: #0a0a0f;
     --bg-card: rgba(255, 255, 255, 0.02);
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0b0;
-    --border-color: rgba(39, 108, 245, 0.1);
-    --font-main: 'Montserrat Alternates', sans-serif;
-    --container-padding: clamp(0.75rem, 5vw, 3rem);
-    --section-padding: clamp(3rem, 8vw, 6rem);
+    --text: #ffffff;
+    --text-muted: #a0a0b0;
+    --border: rgba(39, 108, 245, 0.1);
+    
+    /* Типографика */
+    --font: 'Montserrat Alternates', sans-serif;
+    
+    /* Отступы (адаптивные через clamp) */
+    --section-pad: clamp(3rem, 8vw, 6rem);
+    --container-pad: clamp(0.75rem, 5vw, 3rem);
+    
+    /* Анимации */
     --transition: 0.3s;
-    --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Role color variables */
-.role--red { --role-base: #dc3545; --role-glow: rgba(220, 53, 69, 0.3); --role-text: #ff6b7a; }
-.role--cyan { --role-base: #00d4ff; --role-glow: rgba(0, 212, 255, 0.3); --role-text: var(--cyan-color); }
-.role--blue { --role-base: #276CF5; --role-glow: rgba(39, 108, 245, 0.3); --role-text: var(--accent-light); }
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    font-size: 16px;
-}
-
+/* Сброс стилей */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
 body {
-    font: 500 1rem/1.6 var(--font-main);
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    font: 500 1rem/1.6 var(--font);
+    background: var(--bg);
+    color: var(--text);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
 
-/* Background */
+/* ============================================
+   ФОНОВЫЕ ЭФФЕКТЫ
+   ============================================ */
 #network-canvas {
     position: fixed;
     inset: 0;
@@ -64,7 +63,9 @@ body {
     pointer-events: none;
 }
 
-/* Navigation */
+/* ============================================
+   НАВИГАЦИЯ
+   ============================================ */
 .navbar {
     position: fixed;
     top: 0;
@@ -74,7 +75,7 @@ body {
     padding: 1.2rem 5%;
     background: rgba(10, 10, 15, 0.8);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border);
 }
 
 .nav-container {
@@ -85,6 +86,7 @@ body {
     align-items: center;
 }
 
+/* Логотип с анимацией */
 .logo-link {
     display: flex;
     align-items: center;
@@ -114,7 +116,7 @@ body {
     transform: translate(-50%, -50%);
     font-size: clamp(1.4rem, 4vw, 2rem);
     font-weight: 800;
-    background: linear-gradient(180deg, #fff 0%, var(--accent-light) 50%, var(--accent-color) 100%);
+    background: linear-gradient(180deg, #fff 0%, var(--accent-light) 50%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     z-index: 3;
@@ -122,6 +124,7 @@ body {
     filter: drop-shadow(0 0 10px var(--accent-glow));
 }
 
+/* Орбиты вокруг логотипа */
 .orbit-ring {
     position: absolute;
     border: 2px solid transparent;
@@ -133,14 +136,14 @@ body {
 
 .orbit-ring.one { 
     width: 125%; height: 125%; 
-    border-top-color: var(--accent-color); 
+    border-top-color: var(--accent); 
     border-right-color: var(--accent-light); 
     animation: orbitSpin 4s linear infinite; 
     opacity: 0.6; 
 }
 .orbit-ring.two { 
     width: 145%; height: 145%; 
-    border-bottom-color: var(--accent-color); 
+    border-bottom-color: var(--accent); 
     border-left-color: var(--accent-light); 
     animation: orbitSpin 6s linear infinite reverse; 
     opacity: 0.4; 
@@ -156,9 +159,9 @@ body {
     position: absolute;
     width: 4px;
     height: 4px;
-    background: var(--accent-color);
+    background: var(--accent);
     border-radius: 50%;
-    box-shadow: 0 0 6px var(--accent-color);
+    box-shadow: 0 0 6px var(--accent);
 }
 
 .orbit-ring.one .orbit-dot { 
@@ -172,6 +175,7 @@ body {
     animation: dotPulse 2s ease-in-out infinite 0.5s; 
 }
 
+/* Свечение под буквой */
 .a-glow {
     position: absolute;
     width: 200%; height: 200%;
@@ -184,6 +188,7 @@ body {
     z-index: 0;
 }
 
+/* Интерактивность логотипа */
 .logo-link:hover .orbit-ring.one { animation-duration: 1.5s; opacity: 0.9; transform: translate(-50%, -50%) scale(1.1); }
 .logo-link:hover .orbit-ring.two { animation-duration: 2s; opacity: 0.7; transform: translate(-50%, -50%) scale(1.08); }
 .logo-link:hover .orbit-ring.three { animation-duration: 2.5s; opacity: 0.5; transform: translate(-50%, -50%) scale(1.05); }
@@ -196,13 +201,14 @@ body {
     letter-spacing: 3px;
 }
 
+/* Ссылки навигации */
 .nav-links {
     display: flex;
     gap: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .nav-link {
-    color: var(--text-secondary);
+    color: var(--text-muted);
     text-decoration: none;
     font-weight: 600;
     font-size: clamp(0.85rem, 2vw, 0.95rem);
@@ -211,32 +217,35 @@ body {
     padding: 0.5rem 0;
 }
 
-.nav-link:hover { color: var(--accent-color); }
+.nav-link:hover { color: var(--accent); }
 
 .nav-link::after {
     content: '';
     position: absolute;
     bottom: 0; left: 0;
     width: 0; height: 2px;
-    background: var(--accent-color);
+    background: var(--accent);
     transition: width var(--transition);
     border-radius: 2px;
-    box-shadow: 0 0 10px var(--accent-color);
+    box-shadow: 0 0 10px var(--accent);
 }
 
 .nav-link:hover::after { width: 100%; }
 
+/* Кнопка меню для мобильных */
 .mobile-menu-btn {
     display: none;
     background: none;
     border: none;
-    color: var(--text-primary);
+    color: var(--text);
     font-size: 1.5rem;
     cursor: pointer;
     padding: 0.5rem;
 }
 
-/* Hero */
+/* ============================================
+   ГЛАВНЫЙ ЭКРАН (HERO)
+   ============================================ */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -244,7 +253,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 8rem var(--container-padding) 4rem;
+    padding: 8rem var(--container-pad) 4rem;
     position: relative;
     overflow: hidden;
 }
@@ -268,7 +277,7 @@ body {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-light) 50%, var(--accent-color) 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 50%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 0 30px rgba(39, 108, 245, 0.3));
@@ -276,7 +285,7 @@ body {
 
 .hero-subtitle {
     font-size: clamp(1rem, 2.5vw, 1.25rem);
-    color: var(--text-secondary);
+    color: var(--text-muted);
     max-width: 600px;
     font-weight: 500;
     line-height: 1.7;
@@ -291,6 +300,9 @@ body {
     width: 100%;
 }
 
+/* ============================================
+   КНОПКИ
+   ============================================ */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -298,7 +310,7 @@ body {
     gap: 0.75rem;
     padding: 1rem 2.5rem;
     border-radius: 12px;
-    font: 600 1rem/1.5 var(--font-main);
+    font: 600 1rem/1.5 var(--font);
     cursor: pointer;
     transition: all var(--transition);
     border: none;
@@ -308,7 +320,7 @@ body {
 }
 
 .btn-primary {
-    background: var(--accent-color);
+    background: var(--accent);
     color: #fff;
     box-shadow: 0 4px 20px var(--accent-glow);
 }
@@ -321,20 +333,19 @@ body {
 
 .btn-secondary {
     background: transparent;
-    color: var(--text-primary);
+    color: var(--text);
     border: 1px solid rgba(39, 108, 245, 0.3);
     backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
     background: rgba(39, 108, 245, 0.1);
-    border-color: var(--accent-color);
+    border-color: var(--accent);
     transform: translateY(-2px);
 }
 
-/* ИСПРАВЛЕННАЯ КНОПКА - теперь такой же цвет как btn-primary */
 .btn-glow {
-    background: var(--accent-color);
+    background: var(--accent);
     color: #fff;
     padding: 1.25rem 3rem;
     font-size: 1.1rem;
@@ -350,6 +361,7 @@ body {
     filter: brightness(1.1);
 }
 
+/* Плавающие иконки на фоне */
 .floating-icons {
     position: absolute;
     inset: 0;
@@ -366,7 +378,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--cyan-color);
+    color: var(--cyan);
     font-size: 1.5rem;
     animation: float 6s ease-in-out infinite var(--delay);
     backdrop-filter: blur(5px);
@@ -378,14 +390,16 @@ body {
 .float-icon:nth-child(3) { bottom: 30%; left: 15%; }
 .float-icon:nth-child(4) { bottom: 20%; right: 15%; }
 
-/* Sections */
+/* ============================================
+   СЕКЦИИ И ЗАГОЛОВКИ
+   ============================================ */
 .container {
     max-width: min(1200px, 95%);
     margin: 0 auto;
-    padding: 0 var(--container-padding);
+    padding: 0 var(--container-pad);
 }
 
-section { padding: var(--section-padding) 0; position: relative; }
+section { padding: var(--section-pad) 0; position: relative; }
 
 .section-header {
     text-align: center;
@@ -396,20 +410,21 @@ section { padding: var(--section-padding) 0; position: relative; }
     display: inline-block;
     padding: 0.5rem 1.5rem;
     background: rgba(39, 108, 245, 0.1);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border);
     border-radius: 50px;
     font-size: 0.85rem;
-    color: var(--accent-color);
+    color: var(--accent);
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 1rem;
     font-weight: 700;
 }
 
+/* Красный тег для строгих правил */
 .strict-tag {
     background: rgba(220, 53, 69, 0.15);
     border-color: rgba(220, 53, 69, 0.4);
-    color: var(--strict-color);
+    color: var(--strict);
     box-shadow: 0 0 20px rgba(220, 53, 69, 0.2);
 }
 
@@ -419,11 +434,13 @@ section { padding: var(--section-padding) 0; position: relative; }
 }
 
 .accent {
-    color: var(--accent-color);
+    color: var(--accent);
     text-shadow: 0 0 20px rgba(39, 108, 245, 0.2);
 }
 
-/* Cards */
+/* ============================================
+   КАРТОЧКИ (О ПРОСТРАНСТВЕ)
+   ============================================ */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
@@ -432,7 +449,7 @@ section { padding: var(--section-padding) 0; position: relative; }
 
 .glass-card {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border);
     border-radius: 24px;
     padding: clamp(2rem, 5vw, 3rem) clamp(1.25rem, 4vw, 2rem);
     backdrop-filter: blur(20px);
@@ -443,6 +460,7 @@ section { padding: var(--section-padding) 0; position: relative; }
     transform: translateY(30px);
 }
 
+/* Класс для появления при скролле */
 .glass-card.visible {
     opacity: 1;
     transform: translateY(0);
@@ -451,9 +469,10 @@ section { padding: var(--section-padding) 0; position: relative; }
 .glass-card:hover {
     transform: translateY(-10px);
     border-color: rgba(39, 108, 245, 0.3);
-    box-shadow: var(--shadow-card), 0 0 40px rgba(39, 108, 245, 0.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 40px rgba(39, 108, 245, 0.05);
 }
 
+/* Эффект блика при наведении */
 .card-hover-effect {
     position: absolute;
     top: 0; left: -100%;
@@ -464,6 +483,7 @@ section { padding: var(--section-padding) 0; position: relative; }
 
 .glass-card:hover .card-hover-effect { left: 100%; }
 
+/* Выделенная карточка */
 .glass-card.featured {
     background: linear-gradient(135deg, rgba(39, 108, 245, 0.05), transparent);
     border-color: rgba(39, 108, 245, 0.2);
@@ -477,6 +497,7 @@ section { padding: var(--section-padding) 0; position: relative; }
     pointer-events: none;
 }
 
+/* Иконки карточек */
 .card-icon {
     width: 70px; height: 70px;
     border-radius: 20px;
@@ -494,9 +515,11 @@ section { padding: var(--section-padding) 0; position: relative; }
 .gradient-3 { background: linear-gradient(135deg, #1e90ff, #276CF5); }
 
 .glass-card h3 { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600; }
-.glass-card p { color: var(--text-secondary); line-height: 1.7; }
+.glass-card p { color: var(--text-muted); line-height: 1.7; }
 
-/* Roles */
+/* ============================================
+   РОЛИ
+   ============================================ */
 .roles { background: linear-gradient(180deg, transparent, rgba(39, 108, 245, 0.02)); }
 
 .roles-list {
@@ -513,7 +536,7 @@ section { padding: var(--section-padding) 0; position: relative; }
     align-items: center;
     padding: clamp(1rem, 3vw, 1.5rem) clamp(1rem, 4vw, 2rem);
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border);
     border-radius: 16px;
     backdrop-filter: blur(10px);
     transition: all var(--transition);
@@ -533,7 +556,7 @@ section { padding: var(--section-padding) 0; position: relative; }
     position: absolute;
     left: 0; top: 0;
     height: 100%; width: 4px;
-    background: var(--role-base, var(--accent-color));
+    background: var(--role-color, var(--accent));
     opacity: 0;
     transition: opacity var(--transition);
     border-radius: 16px 0 0 16px;
@@ -557,27 +580,20 @@ section { padding: var(--section-padding) 0; position: relative; }
     font-size: 1.3rem;
     flex-shrink: 0;
     transition: all var(--transition);
-    background: rgba(var(--role-base-rgb, 39, 108, 245), 0.15);
-    border: 1px solid var(--role-base, var(--accent-color));
-    color: var(--role-base, var(--accent-color));
-    box-shadow: 0 0 15px var(--role-glow, rgba(39, 108, 245, 0.2));
+    background: rgba(var(--role-rgb, 39, 108, 245), 0.15);
+    border: 1px solid var(--role-color, var(--accent));
+    color: var(--role-color, var(--accent));
+    box-shadow: 0 0 15px rgba(var(--role-rgb, 39, 108, 245), 0.2);
 }
 
-.role--red { --role-base-rgb: 220, 53, 69; border-color: rgba(220, 53, 69, 0.4); background: linear-gradient(135deg, rgba(220, 53, 69, 0.08), rgba(10, 10, 15, 0.3)); }
-.role--red .role-icon { color: #ff4757; }
-.role--red .role-info h4 { color: #ff6b7a; text-shadow: 0 0 10px rgba(220, 53, 69, 0.3); }
-.role--red:hover { border-color: rgba(220, 53, 69, 0.6); background: rgba(220, 53, 69, 0.1); box-shadow: 0 0 30px rgba(220, 53, 69, 0.2); }
+.role-info h4 { 
+    font-size: clamp(1.1rem, 3vw, 1.2rem); 
+    margin-bottom: 0.25rem; 
+    font-weight: 600; 
+    color: var(--role-text, var(--accent-light)); 
+}
 
-.role--cyan { --role-base-rgb: 0, 212, 255; border-color: rgba(0, 212, 255, 0.2); background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(10, 10, 15, 0.3)); }
-.role--cyan .role-info h4 { text-shadow: 0 0 10px rgba(0, 212, 255, 0.25); }
-.role--cyan:hover { border-color: rgba(0, 212, 255, 0.5); background: rgba(0, 212, 255, 0.08); box-shadow: 0 0 30px rgba(0, 212, 255, 0.15); }
-
-.role--blue { border-color: rgba(39, 108, 245, 0.3); background: linear-gradient(135deg, rgba(39, 108, 245, 0.08), rgba(10, 10, 15, 0.3)); }
-.role--blue .role-info h4 { text-shadow: 0 0 10px rgba(39, 108, 245, 0.3); }
-.role--blue:hover { border-color: rgba(39, 108, 245, 0.6); background: rgba(39, 108, 245, 0.1); box-shadow: 0 0 30px rgba(39, 108, 245, 0.25); }
-
-.role-info h4 { font-size: clamp(1.1rem, 3vw, 1.2rem); margin-bottom: 0.25rem; font-weight: 600; color: var(--role-text, var(--accent-light)); }
-.role-info p { color: var(--text-secondary); font-size: clamp(0.85rem, 2vw, 0.9rem); }
+.role-info p { color: var(--text-muted); font-size: clamp(0.85rem, 2vw, 0.9rem); }
 
 .role-badge {
     padding: 0.5rem 1rem;
@@ -587,12 +603,55 @@ section { padding: var(--section-padding) 0; position: relative; }
     text-transform: uppercase;
     letter-spacing: 1px;
     flex-shrink: 0;
-    background: rgba(var(--role-base-rgb, 39, 108, 245), 0.15);
-    border: 1px solid var(--role-base, var(--accent-color));
-    color: var(--role-base, var(--accent-color));
+    background: rgba(var(--role-rgb, 39, 108, 245), 0.15);
+    border: 1px solid var(--role-color, var(--accent));
+    color: var(--role-color, var(--accent));
 }
 
-/* Rules Slider */
+/* Цветовые схемы ролей */
+.role--red { 
+    --role-color: #dc3545; 
+    --role-rgb: 220, 53, 69; 
+    --role-text: #ff6b7a;
+    border-color: rgba(220, 53, 69, 0.4); 
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.08), rgba(10, 10, 15, 0.3)); 
+}
+.role--red .role-icon { color: #ff4757; }
+.role--red:hover { 
+    border-color: rgba(220, 53, 69, 0.6); 
+    background: rgba(220, 53, 69, 0.1); 
+    box-shadow: 0 0 30px rgba(220, 53, 69, 0.2); 
+}
+
+.role--cyan { 
+    --role-color: var(--cyan); 
+    --role-rgb: 0, 212, 255; 
+    --role-text: var(--cyan);
+    border-color: rgba(0, 212, 255, 0.2); 
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(10, 10, 15, 0.3)); 
+}
+.role--cyan:hover { 
+    border-color: rgba(0, 212, 255, 0.5); 
+    background: rgba(0, 212, 255, 0.08); 
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.15); 
+}
+
+.role--blue { 
+    --role-color: var(--accent); 
+    --role-rgb: 39, 108, 245;
+    --role-text: var(--accent-light);
+    border-color: rgba(39, 108, 245, 0.3); 
+    background: linear-gradient(135deg, rgba(39, 108, 245, 0.08), rgba(10, 10, 15, 0.3)); 
+}
+.role--blue:hover { 
+    border-color: rgba(39, 108, 245, 0.6); 
+    background: rgba(39, 108, 245, 0.1); 
+    box-shadow: 0 0 30px rgba(39, 108, 245, 0.25); 
+}
+
+/* ============================================
+   СЛАЙДЕР ПРАВИЛ
+   ============================================ */
 .rules { background: linear-gradient(180deg, transparent, rgba(39, 108, 245, 0.02)); overflow: hidden; }
 
 .rules-slider { max-width: 800px; margin: 0 auto; position: relative; touch-action: pan-y pinch-zoom; }
@@ -616,7 +675,7 @@ section { padding: var(--section-padding) 0; position: relative; }
 
 .slide-content {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border);
     border-radius: 24px;
     padding: clamp(1.5rem, 4vw, 2.5rem);
     height: 100%;
@@ -630,12 +689,13 @@ section { padding: var(--section-padding) 0; position: relative; }
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
+/* Анимированная полоса сверху */
 .slide-content::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--accent-color), var(--accent-light), var(--accent-color));
+    background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
     background-size: 200% 100%;
     animation: gradientFlow 3s linear infinite;
 }
@@ -649,7 +709,7 @@ section { padding: var(--section-padding) 0; position: relative; }
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-color);
+    color: var(--accent);
     font-size: clamp(1.4rem, 4vw, 1.8rem);
     margin-bottom: 1.25rem;
     box-shadow: 0 10px 30px rgba(39, 108, 245, 0.2);
@@ -665,7 +725,7 @@ section { padding: var(--section-padding) 0; position: relative; }
 }
 
 .slide-content p {
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-size: clamp(0.85rem, 2vw, 0.95rem);
     line-height: 1.5;
     max-width: 600px;
@@ -674,6 +734,7 @@ section { padding: var(--section-padding) 0; position: relative; }
     align-items: center;
 }
 
+/* Строгие правила (красные) */
 .strict-slide .slide-content {
     background: linear-gradient(135deg, rgba(220, 53, 69, 0.08), rgba(39, 108, 245, 0.02));
     border-color: rgba(220, 53, 69, 0.4);
@@ -684,13 +745,14 @@ section { padding: var(--section-padding) 0; position: relative; }
 .strict-slide .slide-icon {
     background: linear-gradient(135deg, rgba(220, 53, 69, 0.2), rgba(220, 53, 69, 0.05));
     border-color: rgba(220, 53, 69, 0.5);
-    color: var(--strict-color);
+    color: var(--strict);
     box-shadow: 0 10px 30px rgba(220, 53, 69, 0.2);
     animation: iconFloatStrict 3s ease-in-out infinite;
 }
 
 .strict-slide h3 { color: #ff6b7a; }
 
+/* Навигация слайдера */
 .slider-nav {
     display: flex;
     align-items: center;
@@ -704,7 +766,7 @@ section { padding: var(--section-padding) 0; position: relative; }
     background: rgba(39, 108, 245, 0.1);
     border: 2px solid rgba(39, 108, 245, 0.3);
     border-radius: 50%;
-    color: var(--accent-color);
+    color: var(--accent);
     font-size: 1.2rem;
     cursor: pointer;
     transition: all var(--transition);
@@ -715,7 +777,7 @@ section { padding: var(--section-padding) 0; position: relative; }
 }
 
 .slider-btn:hover {
-    background: var(--accent-color);
+    background: var(--accent);
     color: #fff;
     transform: scale(1.1);
     box-shadow: 0 0 20px var(--accent-glow);
@@ -742,7 +804,7 @@ section { padding: var(--section-padding) 0; position: relative; }
 
 .dot.active {
     background: transparent;
-    border-color: var(--accent-color);
+    border-color: var(--accent);
     transform: scale(1.3);
 }
 
@@ -753,34 +815,38 @@ section { padding: var(--section-padding) 0; position: relative; }
     transform: translate(-50%, -50%);
     width: 40%; height: 40%;
     border-radius: 50%;
-    background: var(--accent-color);
+    background: var(--accent);
 }
 
 .dot:hover { background: rgba(39, 108, 245, 0.4); transform: scale(1.1); }
 
+/* Красные точки для строгих правил */
 .strict-dot {
-    background: var(--strict-color);
+    background: var(--strict);
     border: none;
     box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
 }
 
 .strict-dot:hover { background: #ff6b7a; box-shadow: 0 0 15px rgba(220, 53, 69, 0.7); transform: scale(1.2); }
-.strict-dot.active { background: var(--strict-color); box-shadow: 0 0 20px rgba(220, 53, 69, 0.8); transform: scale(1.3); }
+.strict-dot.active { background: var(--strict); box-shadow: 0 0 20px rgba(220, 53, 69, 0.8); transform: scale(1.3); }
 
+/* Счетчик слайдов */
 .slider-counter {
     text-align: center;
     margin-top: 1.5rem;
     font-weight: 700;
     font-size: 1rem;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     letter-spacing: 2px;
 }
 
-.slider-counter .current { color: var(--accent-color); font-size: 1.25rem; }
-.slider-counter .current.strict-count { color: var(--strict-color); text-shadow: 0 0 10px rgba(220, 53, 69, 0.5); }
+.slider-counter .current { color: var(--accent); font-size: 1.25rem; }
+.slider-counter .current.strict-count { color: var(--strict); text-shadow: 0 0 10px rgba(220, 53, 69, 0.5); }
 .slider-counter .separator { margin: 0 0.5rem; opacity: 0.5; }
 
-/* CTA & Footer */
+/* ============================================
+   CTA И ПОДВАЛ
+   ============================================ */
 .cta-section {
     padding: clamp(4rem, 10vw, 8rem) 0;
     text-align: center;
@@ -800,11 +866,12 @@ section { padding: var(--section-padding) 0; position: relative; }
 
 .cta-content { position: relative; z-index: 2; }
 .cta-content h2 { font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 1rem; font-weight: 700; }
-.cta-content p { color: var(--text-secondary); font-size: 1.2rem; margin-bottom: 2.5rem; }
+.cta-content p { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2.5rem; }
 
+/* Подвал */
 .footer {
     padding: clamp(2rem, 5vw, 3rem) 0;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--border);
     background: rgba(0, 0, 0, 0.2);
 }
 
@@ -815,7 +882,7 @@ section { padding: var(--section-padding) 0; position: relative; }
     gap: clamp(1rem, 3vw, 2rem);
     max-width: min(1200px, 95%);
     margin: 0 auto;
-    padding: 0 var(--container-padding);
+    padding: 0 var(--container-pad);
 }
 
 .footer-brand {
@@ -825,10 +892,10 @@ section { padding: var(--section-padding) 0; position: relative; }
 }
 
 .footer-logo { transform: scale(0.9); }
-.footer-desc { font-size: 0.9rem; color: var(--text-secondary); letter-spacing: 1px; }
+.footer-desc { font-size: 0.9rem; color: var(--text-muted); letter-spacing: 1px; }
 
 .footer-text {
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-size: 0.9rem;
     text-align: center;
     margin: 0;
@@ -842,27 +909,27 @@ section { padding: var(--section-padding) 0; position: relative; }
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--cyan-color);
+    color: var(--cyan);
     text-decoration: none;
     transition: all var(--transition);
     font-size: 1.5rem;
 }
 
 .social-link:hover {
-    background: var(--cyan-color);
+    background: var(--cyan);
     color: #fff;
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
-    border-color: var(--cyan-color);
+    border-color: var(--cyan);
 }
 
-/* Toast & Scrollbar */
+/* Уведомление (тост) */
 .toast {
     position: fixed;
     bottom: 2rem; right: 2rem;
-    background: var(--bg-secondary);
-    border: 1px solid var(--accent-color);
-    color: var(--accent-color);
+    background: #111118;
+    border: 1px solid var(--accent);
+    color: var(--accent);
     padding: 1rem 2rem;
     border-radius: 12px;
     display: flex;
@@ -878,21 +945,44 @@ section { padding: var(--section-padding) 0; position: relative; }
 
 .toast.show { transform: translateY(0); opacity: 1; }
 
-::-webkit-scrollbar { width: 12px; height: 12px; }
-::-webkit-scrollbar-track { background: var(--bg-secondary); border-radius: 10px; }
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--accent-color), var(--accent-dark));
-    border-radius: 10px;
-    border: 2px solid var(--bg-secondary);
+/* ============================================
+   СКРОЛЛБАР (широкий синий)
+   ============================================ */
+::-webkit-scrollbar { 
+    width: 20px; 
+    height: 20px; 
 }
-::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #4a8cff, var(--accent-color)); }
 
-* { scrollbar-width: thin; scrollbar-color: var(--accent-color) var(--bg-secondary); }
+::-webkit-scrollbar-track { 
+    background: #111118; 
+    border-radius: 10px; 
+    border: 1px solid rgba(39, 108, 245, 0.1);
+}
 
-/* Animations (unchanged) */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+    border-radius: 10px;
+    border: 4px solid #111118;
+    min-height: 60px;
+}
+
+::-webkit-scrollbar-thumb:hover { 
+    background: linear-gradient(180deg, #4a8cff, var(--accent)); 
+    border: 3px solid #111118; 
+}
+
+/* Firefox */
+* { 
+    scrollbar-width: auto; 
+    scrollbar-color: var(--accent) #111118; 
+}
+
+/* ============================================
+   АНИМАЦИИ
+   ============================================ */
 @keyframes letterGlow {
     0%, 100% { filter: drop-shadow(0 0 10px var(--accent-glow)); }
-    50% { filter: drop-shadow(0 0 15px var(--accent-color)) drop-shadow(0 0 25px var(--accent-glow)); }
+    50% { filter: drop-shadow(0 0 15px var(--accent)) drop-shadow(0 0 25px var(--accent-glow)); }
 }
 
 @keyframes orbitSpin {
@@ -940,13 +1030,19 @@ section { padding: var(--section-padding) 0; position: relative; }
     50% { box-shadow: 0 0 50px rgba(39, 108, 245, 0.5); }
 }
 
-/* Responsive */
+/* ============================================
+   АДАПТИВНОСТЬ
+   ============================================ */
+
+/* Планшеты */
 @media (max-width: 1024px) {
     .cards-grid { gap: 1.5rem; }
     .floating-icons .float-icon:nth-child(4) { display: none; }
 }
 
+/* Мобильные устройства */
 @media (max-width: 768px) {
+    /* Меню */
     .nav-links {
         display: none;
         position: absolute;
@@ -955,14 +1051,16 @@ section { padding: var(--section-padding) 0; position: relative; }
         flex-direction: column;
         padding: 2rem;
         gap: 1.5rem;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border);
         backdrop-filter: blur(20px);
     }
     .nav-links.active { display: flex; }
     .mobile-menu-btn { display: block; }
     
+    /* Скрываем плавающие иконки на маленьких экранах */
     .floating-icons { display: none; }
     
+    /* Роли в колонку */
     .role-item { 
         flex-direction: column; 
         text-align: center; 
@@ -970,9 +1068,11 @@ section { padding: var(--section-padding) 0; position: relative; }
     }
     .role-content { flex-direction: column; }
     
+    /* Слайдер выше */
     .slider-container { height: 380px; }
     .slide-content { padding: 1.5rem; }
     
+    /* Подвал в колонку */
     .footer-content { 
         grid-template-columns: 1fr; 
         text-align: center; 
@@ -980,22 +1080,27 @@ section { padding: var(--section-padding) 0; position: relative; }
     }
     .footer-brand { justify-content: center; }
     
+    /* Тост по центру снизу */
     .toast { left: 1rem; right: 1rem; bottom: 1rem; justify-content: center; }
 }
 
+/* Маленькие мобильные */
 @media (max-width: 480px) {
     .hero-buttons { flex-direction: column; width: 100%; gap: 0.75rem; }
     .btn { width: 100%; }
     .slider-container { height: 400px; }
     .slider-dots { gap: 0.5rem; }
     .dot { width: 10px; height: 10px; }
+    ::-webkit-scrollbar { width: 16px; }
 }
 
+/* Очень маленькие экраны */
 @media (max-width: 360px) {
     .orbit-ring.two, .orbit-ring.three { display: none; }
     .slider-container { height: 420px; }
 }
 
+/* Горизонтальная ориентация на мобильных */
 @media (max-height: 500px) and (orientation: landscape) {
     .hero { min-height: auto; padding: 6rem 1rem 3rem; }
     .floating-icons { display: none; }
@@ -1003,11 +1108,13 @@ section { padding: var(--section-padding) 0; position: relative; }
     .slider-container { height: 280px; }
 }
 
+/* Большие экраны */
 @media (min-width: 1400px) {
     .container { max-width: 1400px; }
     .cards-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* Уменьшение анимаций для пользователей с предпочтением */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
