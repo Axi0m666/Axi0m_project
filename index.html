@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Axis — Discord Community. Место без границ для геймеров, разработчиков и творцов.">
+    <title>Axis — Discord Community</title>
+    
+    <!-- Шрифты и иконки -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Фоновый canvas с частицами -->
+    <canvas id="network-canvas" aria-hidden="true"></canvas>
+    <div class="ambient-glow" aria-hidden="true"></div>
+
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="logo-link" aria-label="Axis Home">
+                <div class="logo-a">
+                    <span class="letter-main">A</span>
+                    <div class="orbit-ring one"><div class="orbit-dot"></div></div>
+                    <div class="orbit-ring two"><div class="orbit-dot"></div></div>
+                    <div class="orbit-ring three"></div>
+                    <div class="a-glow"></div>
+                </div>
+                <span class="logo-text">AXIS</span>
+            </a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="#about" class="nav-link">О пространстве</a>
+                <a href="#roles" class="nav-link">Роли</a>
+                <a href="#rules" class="nav-link">Кодекс</a>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Меню" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Главный экран -->
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <h1 class="hero-title"><span class="gradient-text">AXIS</span></h1>
+                <p class="hero-subtitle">Место без границ. Здесь ты можешь собрать сквад для катки, написать код с единомышленниками или просто тепло пообщаться.</p>
+                <div class="hero-buttons">
+                    <a href="https://discord.gg/Kk66QYd8" class="btn btn-primary" target="_blank" rel="noopener">
+                        <i class="fab fa-discord"></i>
+                        <span>Присоединиться</span>
+                    </a>
+                    <button class="btn btn-secondary" id="copyBtn" aria-label="Копировать ссылку">
+                        <i class="fas fa-link"></i>
+                        <span id="copy-text">Копировать ссылку</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Плавающие иконки на фоне -->
+            <div class="floating-icons" aria-hidden="true">
+                <div class="float-icon" style="--delay:0s"><i class="fas fa-gamepad"></i></div>
+                <div class="float-icon" style="--delay:0.5s"><i class="fas fa-code"></i></div>
+                <div class="float-icon" style="--delay:1s"><i class="fas fa-coffee"></i></div>
+                <div class="float-icon" style="--delay:1.5s"><i class="fas fa-palette"></i></div>
+            </div>
+        </section>
+
+        <!-- О проекте -->
+        <section id="about" class="about">
+            <div class="container">
+                <header class="section-header">
+                    <span class="section-tag">О пространстве</span>
+                    <h2 class="section-title">Мульти-пространство <span class="accent">Axis</span></h2>
+                </header>
+                
+                <div class="cards-grid">
+                    <article class="glass-card">
+                        <div class="card-icon gradient-1"><i class="fas fa-gamepad"></i></div>
+                        <h3>Игровая зона</h3>
+                        <p>Собирай команды для любимых игр. От спокойных кооперативов до жарких PvP-сражений.</p>
+                        <div class="card-hover-effect"></div>
+                    </article>
+                    
+                    <article class="glass-card featured">
+                        <div class="card-icon gradient-2"><i class="fas fa-laptop-code"></i></div>
+                        <h3>Dev Corner</h3>
+                        <p>Программируй вместе с сообществом. Делись проектами и получай код-ревью.</p>
+                        <div class="card-glow"></div>
+                    </article>
+                    
+                    <article class="glass-card">
+                        <div class="card-icon gradient-3"><i class="fas fa-coffee"></i></div>
+                        <h3>Ламповая тусовка</h3>
+                        <p>Уютные голосовые для разговоров о жизни, музыке и всём, что согревает душу.</p>
+                        <div class="card-hover-effect"></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Роли -->
+        <section id="roles" class="roles">
+            <div class="container">
+                <header class="section-header">
+                    <span class="section-tag">Иерархия</span>
+                    <h2 class="section-title">Роли <span class="accent">пространства</span></h2>
+                </header>
+                
+                <div class="roles-list">
+                    <!-- Высшие роли (красные) -->
+                    <div class="role-item role--red">
+                        <div class="role-content">
+                            <div class="role-icon"><i class="fas fa-infinity"></i></div>
+                            <div class="role-info"><h4>Core.</h4><p>Создатель и ядро вселенной Axis.</p></div>
+                        </div>
+                        <span class="role-badge">Founder</span>
+                    </div>
+
+                    <div class="role-item role--red">
+                        <div class="role-content">
+                            <div class="role-icon"><i class="fas fa-shield-alt"></i></div>
+                            <div class="role-info"><h4>Consul</h4><p>Соуправитель высшего ранга.</p></div>
+                        </div>
+                        <span class="role-badge">Orbit</span>
+                    </div>
+
+                    <!-- Средние роли (циан) -->
+                    <div class="role-item role--cyan">
+                        <div class="role-content">
+                            <div class="role-icon"><i class="fas fa-brain"></i></div>
+                            <div class="role-info"><h4>Dev</h4><p>Кодеры, верстальщики, программисты.</p></div>
+                        </div>
+                        <span class="role-badge">Geek</span>
+                    </div>
+
+                    <div class="role-item role--cyan">
+                        <div class="role-content">
+                            <div class="role-icon"><i class="fas fa-paint-brush"></i></div>
+                            <div class="role-info"><h4>Designer</h4><p>Дизайнеры, креативщики и творцы.</p></div>
+                        </div>
+                        <span class="role-badge">Art</span>
+                    </div>
+
+                    <div class="role-item role--cyan">
+                        <div class="role-content">
+                            <div class="role-icon"><i class="fas fa-star"></i></div>
+                            <div class="role-info"><h4>Helper</h4><p>Проводники в пространстве Axis.</p></div>
+                        </div>
+                        <span class="role-badge">Mod</span>
+                    </div>
+
+                    <!-- Базовые роли (синие) -->
+                    <div class="role-item role--blue">
+                        <div class="role-content">
+                            <div class="role-icon"><i class="fas fa-dice-d20"></i></div>
+                            <div class="role-info"><h4>Gamer</h4><p>Игроки всех мастей.</p></div>
+                        </div>
+                        <span class="role-badge">Play</span>
+                    </div>
+
+                    <div class="role-item role--blue">
+                        <div class="role-content">
+                            <div class="role-icon"><i class="fas fa-chess-rook"></i></div>
+                            <div class="role-info"><h4>Monolith</h4><p>Незыблемые столпы пространства.</p></div>
+                        </div>
+                        <span class="role-badge">Veteran</span>
+                    </div>
+
+                    <div class="role-item role--blue">
+                        <div class="role-content">
+                            <div class="role-icon"><i class="fas fa-heart"></i></div>
+                            <div class="role-info"><h4>Spark</h4><p>Первый шаг в бесконечность.</p></div>
+                        </div>
+                        <span class="role-badge">User</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Правила (слайдер) -->
+        <section id="rules" class="rules">
+            <div class="container">
+                <header class="section-header">
+                    <span class="section-tag strict-tag">Кодекс</span>
+                    <h2 class="section-title">Основные законы <span class="accent">Axis</span></h2>
+                </header>
+                
+                <div class="rules-slider" id="rulesSlider">
+                    <div class="slider-container">
+                        <!-- Обычные правила -->
+                        <div class="rule-slide active" data-index="0">
+                            <div class="slide-content">
+                                <div class="slide-icon"><i class="fas fa-comment-slash"></i></div>
+                                <h3>Запрет токсичности</h3>
+                                <p>Оскорбления, агрессия, троллинг и провокации запрещены. Уважай каждого участника.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-slide" data-index="1">
+                            <div class="slide-content">
+                                <div class="slide-icon"><i class="fas fa-ban"></i></div>
+                                <h3>Запрет спама</h3>
+                                <p>Флуд, капс, повторяющиеся сообщения, стикер-спам и чрезмерное использование эмодзи запрещены.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-slide" data-index="2">
+                            <div class="slide-content">
+                                <div class="slide-icon"><i class="fas fa-user-secret"></i></div>
+                                <h3>Запрет дискриминации</h3>
+                                <p>Любые проявления расизма, сексизма, гомофобии или ненависти по любому признаку караются.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-slide" data-index="3">
+                            <div class="slide-content">
+                                <div class="slide-icon"><i class="fas fa-ad"></i></div>
+                                <h3>Запрет рекламы</h3>
+                                <p>Сторонние ссылки, приглашения на другие серверы, самореклама без согласования запрещены.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-slide" data-index="4">
+                            <div class="slide-content">
+                                <div class="slide-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                                <h3>Запрет NSFW</h3>
+                                <p>Порнография, гуро, шок-контент и любой 18+ материал запрещены в любом виде.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-slide" data-index="5">
+                            <div class="slide-content">
+                                <div class="slide-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3>Запрет угроз</h3>
+                                <p>Угрозы расправой, доксинг, сваттинг и любые формы преследования участников.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Строгие правила (красные) -->
+                        <div class="rule-slide strict-slide" data-index="6">
+                            <div class="slide-content strict">
+                                <div class="slide-icon"><i class="fas fa-radiation"></i></div>
+                                <h3>Категорический запрет: Политика</h3>
+                                <p>Любые политические дискуссии, пропаганда, споры о власти запрещены. Axis — внеполитичное пространство.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-slide strict-slide" data-index="7">
+                            <div class="slide-content strict">
+                                <div class="slide-icon"><i class="fas fa-skull-crossbones"></i></div>
+                                <h3>Категорический запрет: Наркотики</h3>
+                                <p>Пропаганда, обсуждение или намёки на наркотические вещества — мгновенный перманентный бан.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-slide strict-slide" data-index="8">
+                            <div class="slide-content strict">
+                                <div class="slide-icon"><i class="fas fa-bomb"></i></div>
+                                <h3>Категорический запрет: Экстремизм</h3>
+                                <p>Призывы к насилию, терроризму, суициду, разжигание межнациональной розни.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-slide strict-slide" data-index="9">
+                            <div class="slide-content strict">
+                                <div class="slide-icon"><i class="fas fa-eye-slash"></i></div>
+                                <h3>Категорический запрет: Мошенничество</h3>
+                                <p>Фишинг, обман участников, кража аккаунтов, финансовые махинации.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Управление слайдером -->
+                    <div class="slider-nav">
+                        <button class="slider-btn prev" aria-label="Предыдущий"><i class="fas fa-chevron-left"></i></button>
+                        <div class="slider-dots" role="tablist" aria-label="Слайды"></div>
+                        <button class="slider-btn next" aria-label="Следующий"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    
+                    <div class="slider-counter" aria-live="polite">
+                        <span class="current">01</span><span class="separator">/</span><span class="total">10</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Призыв к действию -->
+        <section class="cta-section">
+            <div class="cta-glow" aria-hidden="true"></div>
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Найди свое место</h2>
+                    <p>В Axis каждый найдет что-то свое.</p>
+                    <a href="https://discord.gg/Kk66QYd8" class="btn btn-glow" target="_blank" rel="noopener">
+                        <i class="fab fa-discord"></i>
+                        Войти в Axis
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo-a footer-logo">
+                    <span class="letter-main">A</span>
+                    <div class="orbit-ring one"><div class="orbit-dot"></div></div>
+                    <div class="orbit-ring two"><div class="orbit-dot"></div></div>
+                    <div class="orbit-ring three"></div>
+                    <div class="a-glow"></div>
+                </div>
+                <span class="footer-desc">Universal Space</span>
+            </div>
+            
+            <p class="footer-text">© 2026 Axis Community. Все права защищены.</p>
+            
+            <a href="https://t.me/mortixon" class="social-link" target="_blank" rel="noopener" aria-label="Telegram">
+                <i class="fab fa-telegram-plane"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Уведомление -->
+    <div id="toast" class="toast" role="status">
+        <i class="fas fa-check-circle"></i>
+        <span>Ссылка скопирована!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
